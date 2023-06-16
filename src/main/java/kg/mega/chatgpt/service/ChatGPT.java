@@ -35,7 +35,6 @@ public class ChatGPT {
     private String apiHost = Api.DEFAULT_API_HOST;
     private Api apiClient;
     private OkHttpClient okHttpClient;
-    private List<Message> messages;
 
     @Builder.Default
     private long timeout = 300;
@@ -102,15 +101,19 @@ public class ChatGPT {
     }
 
 
-    public String chat(String message) {
+    public String chat(String message,List<Message> messages,long limittoken) {
         Message userMessage=Message.ofUser(message);
         messages.add(userMessage);
         ChatRequest chatCompletion = ChatRequest.builder()
                 .messages(messages)
                 .build();
+        System.out.println(chatCompletion);
         ChatResponse response = this.chatCompletion(chatCompletion);
         Message assistantMessage=response.getChoices().get(0).getMessage();
         messages.add(assistantMessage);
+        if(response.getUsage().getTotalTokens()>limittoken){
+            messages.clear();
+        }
         System.out.println(response);
         return assistantMessage.getContent();
     }

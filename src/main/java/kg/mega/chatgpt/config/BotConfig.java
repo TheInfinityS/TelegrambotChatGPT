@@ -18,4 +18,7 @@ public class BotConfig {
 
     @Value("${bot.apitoken}")
     private String apitoken;
+
+    @Value("${bot.limittoken}")
+    private Long limit;
 }

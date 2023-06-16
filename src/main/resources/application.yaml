@@ -2,6 +2,7 @@ bot:
   name: MegacomChatGPTbot
   token: ${bottoken}
   apitoken: ${apitoken}
+  limittoken: 4000
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/chatgpt
